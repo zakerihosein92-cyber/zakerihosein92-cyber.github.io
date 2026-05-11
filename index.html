@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EWM Vocabulary Quiz</title>
+    <style>
+      body {
+        background-color: #708090;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 40px;
+      }
+
+      h1 {
+        color: #FE6F5E;
+      }
+
+      #word {
+        font-size: 32px;
+        color: #FEFEFA;
+        margin: 20px 0;
+      }
+
+      .option {
+        background-color: #FEFEFA;
+        color: #333;
+        border: none;
+        padding: 12px 30px;
+        margin: 8px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 200px;
+      }
+
+      .option:hover {
+        background-color: #FE6F5E;
+        color: white;
+      }
+
+      #feedback {
+        font-size: 20px;
+        color: #FEFEFA;
+        margin-top: 20px;
+      }
+
+      #score {
+        font-size: 16px;
+        color: #FEFEFA;
+        margin-top: 10px;
+      }
+
+      #nextBtn {
+        background-color: #1B1B1B;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1>🧠 EWM Vocabulary Quiz</h1>
+    <p id="score">Score: 0</p>
+    <p id="word"></p>
+    <div id="options"></div>
+    <p id="feedback"></p>
+    <button id="nextBtn" onclick="nextQuestion()">Next ➡️</button>
+
+    <script>
+      let questions = [
+        { word: "Eloquent",  options: ["Talkative", "Well-spoken", "Shy", "Angry"],      answer: "Well-spoken" },
+        { word: "Diligent",  options: ["Lazy", "Smart", "Hardworking", "Funny"],          answer: "Hardworking" },
+        { word: "Candid",    options: ["Honest", "Rude", "Quiet", "Brave"],               answer: "Honest" },
+        { word: "Resilient", options: ["Weak", "Flexible", "Strong-willed", "Careless"],  answer: "Strong-willed" },
+        { word: "Ambiguous", options: ["Clear", "Confusing", "Uncertain", "Boring"],      answer: "Uncertain" }
+      ];
+
+      let currentQuestion = 0;
+      let score = 0;
+
+      function loadQuestion() {
+        let q = questions[currentQuestion];
+        document.getElementById("word").innerText = q.word;
+        document.getElementById("feedback").innerText = "";
+        document.getElementById("nextBtn").style.display = "none";
+
+        let optionsDiv = document.getElementById("options");
+        optionsDiv.innerHTML = "";
+
+        for (let i = 0; i < q.options.length; i++) {
+          let btn = document.createElement("button");
+          btn.innerText = q.options[i];
+          btn.className = "option";
+          btn.onclick = function() { checkAnswer(q.options[i]); };
+          optionsDiv.appendChild(btn);
+        }
+      }
+
+      function checkAnswer(selected) {
+        let q = questions[currentQuestion];
+
+        if (selected === q.answer) {
+          document.getElementById("feedback").innerText = "✅ Correct! Well done!";
+          score++;
+        } else {
+          document.getElementById("feedback").innerText = "❌ Not quite! The answer was: " + q.answer;
+        }
+
+        document.getElementById("score").innerText = "Score: " + score;
+        document.getElementById("nextBtn").style.display = "inline-block";
+
+        let buttons = document.getElementsByClassName("option");
+        for (let i = 0; i < buttons.length; i++) {
+          buttons[i].disabled = true;
+        }
+      }
+
+      function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          loadQuestion();
+        } else {
+          document.getElementById("word").innerText = "Quiz Complete! 🎉";
+          document.getElementById("options").innerHTML = "";
+          document.getElementById("feedback").innerText = "Your score: " + score + " out of " + questions.length;
+          document.getElementById("nextBtn").style.display = "none";
+        }
+      }
+
+      loadQuestion();
+    </script>
+
+  </body>
+</html>

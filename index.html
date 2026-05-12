@@ -121,41 +121,19 @@
         }
       }
 
-   function nextQuestion() {
-  currentQuestion++;
-  if (currentQuestion < questions.length) {
-    loadQuestion();
-  } else {
-    clearInterval(timer);
-    document.getElementById("timer").innerText = "";
-    document.getElementById("word").innerText = "Quiz Complete! 🎉";
-    document.getElementById("options").innerHTML = "";
-    document.getElementById("nextBtn").style.display = "none";
-
-    let total = questions.length;
-    let message = "";
-
-    if (score === total) {
-      message = "🏆 Perfect score! You're eloquent, diligent AND brilliant!";
-    } else if (score >= 3) {
-      message = "👏 Great job! Keep practising and you'll ace it!";
-    } else {
-      message = "📚 Good try! Review the words and try again!";
-    }
-
-    document.getElementById("feedback").innerText = "Your score: " + score + " out of " + total + "\n" + message;
-
-    document.getElementById("feedback").innerHTML += 
-      "<br><br><button onclick='restartQuiz()' style='background:#FE6F5E;color:white;border:none;padding:12px 30px;border-radius:8px;font-size:16px;cursor:pointer;'>🔄 Play Again</button>";
-  }
-}
-
-function restartQuiz() {
-  currentQuestion = 0;
-  score = 0;
-  document.getElementById("score").innerText = "Score: 0";
-  loadQuestion();
-}
+      function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          loadQuestion();
+        } else {
+          clearInterval(timer);
+          document.getElementById("timer").innerText = "";
+          document.getElementById("word").innerText = "Quiz Complete! 🎉";
+          document.getElementById("options").innerHTML = "";
+          document.getElementById("feedback").innerText = "Your score: " + score + " out of " + questions.length;
+          document.getElementById("nextBtn").style.display = "none";
+        }
+      }
 
       loadQuestion();
     </script>
